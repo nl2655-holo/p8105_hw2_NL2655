@@ -22,7 +22,8 @@ Trash_data =
   janitor::clean_names() %>% 
   drop_na(dumpster) %>% 
 mutate(
-  sports_balls = as.integer(pull(Trash_data, sports_balls)))
+  sports_balls = as.integer(sports_balls))
+Trash_data
 ```
 
 ```{r}
@@ -43,8 +44,11 @@ Pa_2018 =
 Pa_17_18 = 
   full_join(Pa_2017, Pa_2018, by = "month") %>% 
   mutate(month = month.name)
+Pa_17_18
 ```
 
+
+## clean pols_month
 ```{r}
 pols_month = 
   read_csv("Data/fivethirtyeight_datasets/pols-month.csv") %>% 
@@ -59,5 +63,21 @@ pols_month =
     names_prefix = "prez_"
   ) %>% 
   select(-day)
+pols_month
+```
+
+## clean snp
+
+```{r}
+snp =
+  read_csv("Data/fivethirtyeight_datasets/snp.csv") %>% 
+janitor::clean_names() %>% 
+  separate(date, c("month", "day", "year"))%>% 
+  arrange(year, as.integer(month)) %>% 
+    mutate(
+    month = as.numeric(month),
+    month = month.name[month],
+  )
+snp
 ```
 
