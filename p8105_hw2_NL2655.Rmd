@@ -1,0 +1,11 @@
+---
+title: "p8105_hw2_NL2655"
+author: "Nankun"
+date: "2019/10/4"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
