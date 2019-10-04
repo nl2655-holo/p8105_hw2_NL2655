@@ -136,6 +136,7 @@ Popular_Baby %>%
 Popular_Baby
 ```
 
+## Table 1 "Olivia"
 ```{r}
 Olivia_df = 
 Popular_Baby %>% 
@@ -148,5 +149,34 @@ Popular_Baby %>%
   ) %>% 
   knitr::kable()
 Olivia_df
+```
+
+## Table 2 Most popular boies' names
+```{r}
+boy_df =
+  Popular_Baby %>% 
+  filter(gender == "MALE", rank == "1") %>% 
+  select(year_of_birth, childs_first_name, ethnicity) %>% 
+  arrange(year_of_birth) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "childs_first_name"
+  ) %>% 
+  knitr::kable()
+boy_df
+```
+
+## Scatter plot 
+```{r}
+white_boy =
+  Popular_Baby %>% 
+  filter(gender == "MALE", ethnicity == "WHITE NON HISPANIC", year_of_birth == "2016") %>% 
+  mutate(
+    Name_rank = as.numeric(rank),
+    Number_of_name = as.numeric(count)
+  ) %>% 
+  ggplot(aes(x = Name_rank, y = Number_of_name))+
+  geom_point(color = "red")
+white_boy
 ```
 
