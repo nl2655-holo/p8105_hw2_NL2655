@@ -47,7 +47,7 @@ Pa_17_18 =
 Pa_17_18
 ```
 
-
+# problem 2
 ## clean pols_month
 ```{r}
 pols_month = 
@@ -117,5 +117,36 @@ snp_pol =
 Summary_data = 
   full_join(snp_pol, unemployment, by =c("year", "month"))
 Summary_data
+```
+
+# Problem 3
+## data cleaning
+```{r}
+Popular_Baby = read_csv("Data/Popular_Baby_Names.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate_all(toupper) %>% 
+  mutate(
+    ethnicity = replace(ethnicity, ethnicity == "ASIAN AND PACI", "ASIAN AND PACIFIC ISLANDER"),
+    ethnicity = replace(ethnicity, ethnicity == "BLACK NON HISP", "BLACK NON HISPANIC"),
+    ethnicity = replace(ethnicity, ethnicity == "WHITE NON HISP", "WHITE NON HISPANIC")
+  ) %>% 
+  distinct()
+Popular_Baby %>% 
+  count(ethnicity)
+Popular_Baby
+```
+
+```{r}
+Olivia_df = 
+Popular_Baby %>% 
+  filter(gender == "FEMALE", childs_first_name == "OLIVIA") %>% 
+  select(year_of_birth, ethnicity, rank) %>% 
+  arrange(year_of_birth) %>% 
+  pivot_wider(
+    names_from = "year_of_birth",
+    values_from = "rank"
+  ) %>% 
+  knitr::kable()
+Olivia_df
 ```
 
